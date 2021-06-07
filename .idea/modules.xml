@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../git-2010-test/git-2010-test.iml" filepath="$PROJECT_DIR$/../git-2010-test/git-2010-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yingx_ghb/yingx_ghb.iml" filepath="$PROJECT_DIR$/yingx_ghb/yingx_ghb.iml" />
+    </modules>
+  </component>
+</project>

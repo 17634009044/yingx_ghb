@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yingx_ghb.dao.AdminDAO">
+
+    <select id="queryName" resultType="Admin">
+        select * from yx_admin where username=#{username}
+    </select>
+
+    <insert id="add" parameterType="Admin">
+        insert into yx_admin values(#{id},#{username},#{password},#{status},#{level},#{salt})
+    </insert>
+
+    <update id="update" parameterType="Admin">
+        update yx_admin set username=#{username},password=#{password},status=#{status},
+                            level=#{level},salt=#{salt} where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from yx_admin where id=#{id}
+    </delete>
+
+    <select id="queryBylevels" resultType="Admin">
+        select * from yx_admin where level =2 limit #{begin},#{end}
+    </select>
+
+    <select id="queryCount" resultType="Integer">
+        select count(id) from yx_admin
+    </select>
+</mapper>

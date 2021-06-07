@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yingx_ghb.dao.CategoryDAO">
+
+    <resultMap id="cateMap" type="com.baizhi.yingx_ghb.entity.Category">
+        <id column="cid" property="id"/>
+        <result column="ccatename" property="cate_name"/>
+        <result column="clevels" property="levels"/>
+        <result column="cparentId" property="parent_id"/>
+
+        <collection property="cate" javaType="list" ofType="Category">
+            <id column="c1id" property="id"/>
+            <result column="c1catename" property="cate_name"/>
+            <result column="c1levels" property="levels"/>
+            <result column="c1parentId" property="parent_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryOne" parameterType="String" resultMap="cateMap">
+        select c.id cid,c.cate_name ccatename,c.levels clevels,c.parent_id cparentId,c1.id c1id,c1.cate_name c1catename,c1.levels c1levels,
+        c1.parent_id c1parentId from yx_category c left join yx_category c1 on c.id=c1.parent_id where c.id=#{id}
+    </select>
+
+    <select id="queryTwo" parameterType="String" resultType="Category">
+        select * from yx_category where levels='2'
+    </select>
+    <select id="queryAll" resultType="Category">
+        select * from yx_category where levels = '1'
+    </select>
+
+    <insert id="add" parameterType="Category">
+        insert into yx_category values (#{id},#{cate_name},#{levels},#{parent_id})
+    </insert>
+
+    <update id="update" parameterType="Category">
+        update yx_category
+            <set>
+                <if test="cate_name!=null">cate_name=#{cate_name},</if>
+                <if test="levels!=null">levels=#{levels},</if>
+                <if test="parent_id!=null">parent_id=#{parent_id}</if>
+            </set>
+
+             where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from yx_category where id=#{id}
+    </delete>
+
+
+    <!--分页-->
+    <select id="queryAllPage" resultType="Category">
+        select * from yx_category where levels=#{levels} limit #{begin},#{end}
+    </select>
+
+    <!--数量-->
+    <select id="queryCount" resultType="Integer">
+        select count(id) from yx_category
+    </select>
+</mapper>

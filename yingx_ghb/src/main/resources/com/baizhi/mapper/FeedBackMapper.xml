@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yingx_ghb.dao.FeedBackDAO">
+
+    <resultMap id="FMap" type="com.baizhi.yingx_ghb.entity.FeedBack">
+        <id column="fid" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="feed_time" property="feed_time"/>
+
+        <association property="user" javaType="com.baizhi.yingx_ghb.entity.User">
+            <id column="uid" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+
+
+
+    <select id="queryAll" resultMap="FMap">
+        select f.id fid,f.title,f.content,f.feed_time,u.id uid,u.name from yx_feedback f
+            left join yx_user u on f.user_id=u.id limit #{begin},#{end}
+    </select>
+    
+    <select id="queryCount" resultType="Integer">
+        select count(id) from yx_feedback
+    </select>
+
+</mapper>

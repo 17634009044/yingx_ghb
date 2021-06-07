@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yingx_ghb.dao.LogDAO">
+
+
+    <select id="queryPage" resultType="Log">
+        select * from yx_log limit #{begin},#{end}
+    </select>
+
+    <select id="queryAll" resultType="Log">
+        select * from yx_log
+    </select>
+
+    <select id="queryCount" resultType="Integer">
+         select count(id) from yx_log
+    </select>
+
+    <insert id="add" parameterType="Log">
+        insert into yx_log values(#{id},#{admin_name},#{option_time},#{method},#{status})
+    </insert>
+</mapper>

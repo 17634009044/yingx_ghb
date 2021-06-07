@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.yingx_ghb.dao.VideoDAO">
+
+    <resultMap id="vMap" type="com.baizhi.yingx_ghb.entity.Video">
+        <id column="vid" property="id"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="video_path" property="video_path"/>
+        <result column="cover_path" property="cover_path"/>
+        <result column="upload_time" property="upload_time"/>
+        <result column="user_id" property="user_id"/>
+
+        <association property="category" javaType="com.baizhi.yingx_ghb.entity.Category">
+            <id column="cid" property="id"/>
+            <result column="cate_name" property="cate_name"/>
+            <result column="levels" property="levels"/>
+            <result column="parent_id" property="parent_id"/>
+        </association>
+    </resultMap>
+
+    <select id="queryAll" resultMap="vMap">
+        select v.id vid,v.title,v.description,v.video_path,v.cover_path,v.upload_time,v.user_id,c.id cid,c.cate_name,c.levels,c.parent_id,u.id uid,u.name from yx_video v left join
+           yx_category c on v.cate_id=c.id left join yx_user u on v.user_id=u.id limit #{begin},#{end}
+    </select>
+
+    <select id="queryByReleaseTimes" resultType="com.baizhi.yingx_ghb.entity.VideoVO">
+        select u.head_img userPhoto,v.id,v.title videoTitle,v.description description,v.video_path path,v.cover_path cover,v.upload_time uploadTime,v.cate_id,v.group_id,v.user_id,
+               c.cate_name cateName from yx_user u
+            right join yx_video v on u.id=v.user_id left join yx_category c on v.cate_id=c.id order by v.upload_time
+    </select>
+    <insert id="add" parameterType="Video">
+        insert into yx_video values (#{id},#{title},#{description},#{video_path},#{cover_path},#{upload_time},#{cate_id},#{group_id},#{user_id})
+    </insert>
+
+    <update id="update" parameterType="Video">
+        update yx_video
+            <set>
+                <if test="title!=null">title=#{title},</if>
+                <if test="description!=null">description=#{description},</if>
+                <if test="video_path!=null">video_path=#{video_path},</if>
+                <if test="cover_path!=null">cover_path=#{cover_path},</if>
+                <if test="upload_time!=null">upload_time=#{upload_time},</if>
+                <if test="cate_id!=null">cate_id=#{cate_id},</if>
+                <if test="group_id!=null">group_id=#{group_id},</if>
+                <if test="user_id!=null">user_id=#{user_id}</if>
+            </set>
+            where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from yx_video where id=#{id}
+    </delete>
+
+    <select id="queryCount" resultType="Integer">
+        select count(id) from yx_video
+    </select>
+
+    <select id="queryById" parameterType="String" resultType="Video">
+        select * from yx_video where id=#{id}
+    </select>
+</mapper>
