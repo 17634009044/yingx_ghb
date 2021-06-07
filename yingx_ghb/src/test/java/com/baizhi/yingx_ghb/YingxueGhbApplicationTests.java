@@ -58,6 +58,8 @@ import java.util.List;
         Admin admin = adminDAO.queryName("admin");
         System.out.println(admin);
 
+
+        System.out.println("123456 = " + 123456);
       List<Category> categories = categoryDAO.queryTwo("2");
       for (Category category : categories) {
          System.out.println(category);
