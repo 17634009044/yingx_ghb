@@ -53,6 +53,18 @@ import java.util.List;
 
 
    }
+    @Test
+    void contextLoads11() {
+        Admin admin = adminDAO.queryName("admin");
+        System.out.println(admin);
+
+      List<Category> categories = categoryDAO.queryTwo("2");
+      for (Category category : categories) {
+         System.out.println(category);
+      }
+
+
+   }
 /*
     @Test
     void queryAll(){
